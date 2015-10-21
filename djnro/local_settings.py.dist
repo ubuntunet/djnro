@@ -107,22 +107,6 @@ TIME_ZONE = 'Europe/Athens'
 # map center (lat, lng)
 MAP_CENTER = (36.97, 23.71)
 
-# Frontend country specific vars, eg. Greece
-NRO_COUNTRY_NAME = _('My Country')
-# Variable used by context_processor to display the "eduroam | <country_code>" in base.html
-NRO_COUNTRY_CODE = 'tld'
-# main domain url used in right top icon, eg. http://www.grnet.gr
-NRO_DOMAIN_MAIN_URL = "http://www.example.com"
-# developer info for footer
-NRO_PROV_BY_DICT = {"name": "GRNET NOC", "url": "//noc.grnet.gr"}
-#provider social media contact (Use: // to preserve https)
-NRO_PROV_SOCIAL_MEDIA_CONTACT = [
-    {"url": "//facebook.com/noc.grnet.gr", "icon":"/static/img/facebook_img.png", "name":"Facebook"},
-    {"url": "//twitter.com/grnetnoc", "icon":"/static/img/twitter_img.png", "name":"Twitter"},
-]
-
-#Helpdesk, used in base.html:
-NRO_DOMAIN_HELPDESK_DICT = {"name": _("Domain Helpdesk"), 'email':'helpdesk@example.com', 'phone': '12324567890', 'uri': 'helpdesk.example.com'}
 
 #Countries for Realm model:
 REALM_COUNTRIES = (
@@ -173,3 +157,41 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = []
 #         "CAT_IDPMGMT_URL": "https://cat-test.eduroam.org/test/admin/overview_federation.php"
 #     },
 # }
+
+
+BRANDING = {
+    'title': 'eduroam',
+    'icons': {
+        'favicon': 'img/favicon.ico',
+        'apple': {
+            '144x144': 'img/edu144-icon.png',
+            '114x114': 'img/edu114-icon.png',
+            '72x72': 'img/edu72-icon.png',
+            'generic': 'img/edu-icon.png',
+        }
+    },
+    'service_provided_by': {
+        'name': 'GRNET NOC',
+        'url': 'https://noc.grnet.gr',
+    },
+    'social_media': [{
+        'url': 'https://facebook.com/noc.grnet.gr',
+        'icon': 'fa fa-facebook',
+        'name': 'Facebook'
+    }, {
+        'url': 'https://twitter.com/grnetnoc',
+        'icon': 'fa fa-twitter', 'name': 'Twitter',
+        'name': 'Twitter'
+    }, ],
+    'country': {
+        'name': _('Greece'),
+        'code': 'gr'
+    },
+    'helpdesk': {
+        "name": _("Domain Helpdesk"),
+        'email': 'helpdesk@example.com',
+        'phone': '12324567890',
+        'uri': 'helpdesk.example.com'
+    },
+}
+

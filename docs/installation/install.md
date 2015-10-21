@@ -75,33 +75,62 @@ Set your cache backend (if you want to use one). For production instances you ca
         }
     }
 
-NRO specific parameters. These affect HTML templates::
+### NRO specific parameters
 
-	# Frontend country specific vars, eg. Greece
-	NRO_COUNTRY_NAME = _('My Country')
-	# Variable used by context_processor to display the "eduroam | <country_code>" in base.html
-	NRO_COUNTRY_CODE = 'gr'
-	# main domain url used in right top icon, eg. http://www.grnet.gr
-	NRO_DOMAIN_MAIN_URL = "http://www.example.com"
-	# provider info for footer
-	NRO_PROV_BY_DICT = {"name": "EXAMPLE DEV TEAM", "url": "http://devteam.example.com"}
-	#NRO social media contact (Use: // to preserve https)
-	NRO_PROV_SOCIAL_MEDIA_CONTACT = [
-	                                {"url":"//soc.media.url", "icon":"icon.png", "name":"NAME1(eg. Facebook)"},
-	                                {"url":"//soc.media.url", "icon":"icon.png",  "name":"NAME2(eg. Twitter)"},
-	                                ]
+These parameters affect html templates and exist into the BRANDING dict
+in `local_settings.py`:
+
+	BRANDING = {
+		# title
+	    'title': 'eduroam',
+	    'icons': {
+	        'favicon': 'img/favicon.ico',
+	        'apple': {
+	            '144x144': 'img/edu144-icon.png',
+	            '114x114': 'img/edu114-icon.png',
+	            '72x72': 'img/edu72-icon.png',
+	            'generic': 'img/edu-icon.png',
+	        }
+	    },
+		# provider info for footer
+	    'service_provided_by': {
+	        'name': 'GRNET NOC',
+	        'url': 'https://noc.grnet.gr',
+	    },
+	    # NRO social media contact
+	    'social_media': [{
+	        'url': 'https://facebook.com/noc.grnet.gr',
+	        'icon': 'fa fa-facebook',
+	        'name': 'Facebook'
+	    }, {
+	        'url': 'https://twitter.com/grnetnoc',
+	        'icon': 'fa fa-twitter', 'name': 'Twitter',
+	        'name': 'Twitter'
+	    }, ],
+	    'country': {
+			# Frontend country specific vars, eg. Greece
+	        'name': _('Greece'),
+			# Variable used by context_processor to display the "eduroam | <country_code>" in base.html
+	        'code': 'gr'
+	    },
+	    # Helpdesk, used in base.html:
+	    'helpdesk': {
+	        "name": _("Domain Helpdesk"),
+	        'email': 'helpdesk@example.com',
+	        'phone': '12324567890',
+	        'uri': 'helpdesk.example.com'
+	    },
+	}
+
 	# map center (lat, lng)
 	MAP_CENTER = (36.97, 23.71)
-	#Helpdesk, used in base.html:
-	NRO_DOMAIN_HELPDESK_DICT = {"name": _("Domain Helpdesk"), 'email':'helpdesk@example.com', 'phone': '12324567890', 'uri': 'helpdesk.example.com'}
 
-
-Set the Realm country for REALM model::
+Set the Realm country for REALM model:
 
 	#Countries for Realm model:
 	REALM_COUNTRIES = (
-	             ('country_2letters', 'Country' ),
-	            )
+		('country_2letters', 'Country' ),
+	)
 
 
 ### Adding iframe in footer
@@ -110,6 +139,9 @@ In case you need to add an iframe with banners at the bottom of the every page, 
 
 
 Attribute map to match your AAI policy and SSO software (typically Shibboleth SP)::
+=======
+Attribute map to match your AAI policy and SSO software (typically Shibboleth SP):
+>>>>>>> branding
 
 	#Shibboleth attribute map
 	SHIB_USERNAME = ['HTTP_EPPN']
