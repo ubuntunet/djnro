@@ -99,6 +99,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
     'django.core.context_processors.request',
+    'djnro.context_processors.branding',
     'edumanage.context_processors.country_code',
     'edumanage.context_processors.cat_instances',
     'social.apps.django_app.context_processors.backends',
@@ -256,6 +257,8 @@ LINKEDIN_EXTRA_DATA = [('id', 'id'),
 
 
 CAT_INSTANCES = ()
+
+
 
 import _version
 SW_VERSION = _version.VERSION

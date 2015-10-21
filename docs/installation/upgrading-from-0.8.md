@@ -51,3 +51,27 @@ Now in the new installation:
  - run `./manage.py loaddata --settings='settings' /tmp/eduroam_0.8.ordered.json`
  - Continue with the `Migrate` step from above.
 
+# Branding
+The following settings were merged under `BRANDING` in `local_settings.py` and should be moved like that:
+
+		BRANDING = {
+			'country': {
+				'name': '<NRO_COUNTRY_NAME>',
+				'code': '<NRO_COUNTRY_CODE>',
+			},
+			'service_provided_by': '<NRO_PROV_BY_DICT>',
+			'social_media': '<NRO_PROV_SOCIAL_MEDIA_CONTACT>',
+			'helpdesk': '<NRO_DOMAIN_HELPDESK_DICT>',
+			# these are new
+			'title': '<page_title>',
+			'icons': {
+				'favicon': 'img/favicon.ico',
+		        'apple': {
+		            '144x144': 'img/edu144-icon.png',
+		            '114x114': 'img/edu114-icon.png',
+		            '72x72': 'img/edu72-icon.png',
+		            'generic': 'img/edu-icon.png',
+		        }
+			}
+		}
+

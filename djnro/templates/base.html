@@ -3,14 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>{% block title %}eduroam | {{COUNTRY_CODE}}{% endblock %} : {% block currentpagetitle %}{% endblock %}</title>
+<title>{% block title %}{{ BRANDING.title }} | {{ BRANDING.country.code }}{% endblock %} : {% block currentpagetitle %}{% endblock %}</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link REL="shortcut icon" HREF="{% static 'img/favicon.ico' %}">
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'img/edu144-icon.png' %}">
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'img/edu114-icon.png' %}">
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'img/edu72-icon.png' %}">
-<link rel="apple-touch-icon-precomposed" href="{% static 'img/edu-icon.png' %}">
+<link REL="shortcut icon" HREF="{% static BRANDING.icons.favicon %}">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static  BRANDING.icons.apple.144x144 %}">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static BRANDING.icons.apple.114x114 %}">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static BRANDING.icons.apple.72x72 %}">
+<link rel="apple-touch-icon-precomposed" href="{% static BRANDING.icons.apple.generic %}">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <link href="{% static 'css/style.css' %}" rel="stylesheet">
@@ -24,7 +24,7 @@
           <div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">{% trans "Toggle navigation" %}</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -34,7 +34,7 @@
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <li class="{% block hometop %}{% endblock %}"><a href="{% url index %}">{% trans "Home" %}</a></li>
-                <li class="{% block faqtop %}{% endblock %}"><a href="/faq/{{LANGUAGE_CODE}}/">FAQ</a></li>
+                <li class="{% block faqtop %}{% endblock %}"><a href="/faq/{{LANGUAGE_CODE}}/">{% trans "FAQ" %}</a></li>
                 <li class="{% block manage %}{% endblock %}"><a href="{% url manage %}"> {% trans "Manage" %}</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
@@ -70,7 +70,7 @@
                     </ul>
                 </li>
                 {% if request.user.is_authenticated %}
-                <li><a href="{% url logout %}">Logout</a></li>
+                <li><a href="{% url logout %}">{% trans "Logout" %}</a></li>
                 {% endif %}
               </ul>
             </div><!--/.nav-collapse -->
