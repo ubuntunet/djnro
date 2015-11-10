@@ -138,10 +138,7 @@ Set the Realm country for REALM model:
 In case you need to add an iframe with banners at the bottom of the every page, you can paste your iframe code at bottom_iframe template under 'djnro/templates/partial/bottom_iframe.html'
 
 
-Attribute map to match your AAI policy and SSO software (typically Shibboleth SP)::
-=======
 Attribute map to match your AAI policy and SSO software (typically Shibboleth SP):
->>>>>>> branding
 
 	#Shibboleth attribute map
 	SHIB_USERNAME = ['HTTP_EPPN']
