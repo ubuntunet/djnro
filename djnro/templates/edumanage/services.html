@@ -10,7 +10,31 @@
 <link href="https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 {% endblock %}
 
+
 {% block management_content %}
+		
+		<div id="js-trans" data-json=
+		'{
+			"display":	"{% trans 'Display' %}",
+			"nrecs":		"{% trans 'No records to display' %}",
+			"entries":	"{% trans 'Showing 0 to 0 of 0 entries' %}",
+			"search":		"{% trans 'Search:' %}",
+			"first":		"{% trans 'First' %}",
+			"loc":		"{% trans 'Locations' %}",
+			"prev":		"{% trans 'Previous' %}",
+			"next":		"{% trans 'Next' %}",
+			"last":		"{% trans 'Last' %}",
+			"dellocwarn":	"{% trans 'You are about to delete location' %}",
+			"presdel":	"{% trans 'Press Delete to proceed or Cancel to cancel deletion' %}",
+			"delloc":		"{% trans 'Delete Location' %}",
+			"service":	"{% trans 'Service' %}",
+			"succdel":	"{% trans 'successfully deleted' %}",
+			"all":	"{% trans 'All' %}",
+			"showing":	"{% trans 'Showing _START_ to _END_ of _TOTAL_ entries' %}"
+		}'>
+		</div>
+		<div id="js-delurl" data-delurl="{% url del-service %}"></div>
+
 		<h4>{% trans "Locations" %}</h4>
 		<hr>
 		{% if messages %}
@@ -21,6 +45,8 @@
 			</table>
 		{% endif %}
 {% if institution.ertype == 2 or institution.ertype == 3 %}
+	<div id="js-services" data-services="{% if services %}true{% else %}false{% endif %}"></div>
+	
 	{% if services %}
 		<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" width="100%" id="table">
 			<thead>
@@ -46,8 +72,8 @@
 			{% endfor %}
 			</tbody>
 		</table>
-	    {% endif %}
-	{% endif %}
+    {% endif %}
+{% endif %}
 
 <div class="modal" id="myModal">
 	<div class="modal-dialog">
@@ -93,6 +119,7 @@
 {% block extrajs %}
 <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/plug-ins/505bef35b56/integration/bootstrap/1/dataTables.bootstrap.js"></script>
+<<<<<<< Updated upstream
 <script type="text/javascript">
 $(document).ready(function(){
 	{% if services %}
@@ -183,4 +210,7 @@ $(document).ready(function(){
 	{% endif %}
 });
 </script>
+=======
+<script type="text/javascript" src="{% static 'edumanage/js/services.js' %}"></script>
+>>>>>>> Stashed changes
 {% endblock %}

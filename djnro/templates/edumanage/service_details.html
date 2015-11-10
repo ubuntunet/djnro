@@ -15,87 +15,16 @@
 		width: auto !important;
 	}
 </style>
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript">
-        var map = '';
-        var lat = "{{service.latitude}}";
-		var lat = parseFloat(lat.replace(",","."));
-		var lng = "{{service.longitude}}";
-		var lng = parseFloat(lng.replace(",","."));
-		var latlng = new google.maps.LatLng(lat,lng);
-		var zoomLevel = 16;
 
-        function initialize() {
-            image = new google.maps.MarkerImage('{% static 'img/edupin.png' %}',
-                    // This marker is 29 pixels wide by 40 pixels tall.
-                    new google.maps.Size(29, 40),
-                    // The origin for this image is 0,0.
-                    new google.maps.Point(0,0),
-                    // The anchor for this image is the base of the flagpole at 18,42.
-                    new google.maps.Point(14, 40)
-                );
-            var styleArray = [
-			                   {
-			                       featureType: "all",
-			                       stylers: [
-			                         { saturation: -60 },
-			                         {gamma: 1.00 }
-			                       ]
-			                     },{
-			                       featureType: "poi.business",
-			                       elementType: "labels",
-			                       stylers: [
-			                         { visibility: "off" }
-			                       ]
-			                     },
-			                     { "featureType": "transit.line", "elementType": "geometry", "stylers": [ { "visibility": "off" } ] },
-			                     { "featureType": "poi", "elementType": "all", "stylers": [ { "visibility": "off" } ] },
-			                     {'featureType': "administrative.country",
-			                     'elementType': "labels",
-			                     'stylers': [
-			                         { 'visibility': "off" }
-			                     ]}
-			                   ];
-            var mapOptions = {
-                center : latlng,
-                zoom : zoomLevel,
-                styles: styleArray,
-                 mapTypeId: google.maps.MapTypeId.ROADMAP,
-                    mapTypeControlOptions: {
-                          style: google.maps.MapTypeControlStyle.DEFAULT
-                        },
-                    navigationControl: true,
-                    mapTypeControl: false,
-            };
-            map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-        	var marker = new google.maps.Marker({
-        		'position' : latlng,
-        		'map' : map,
-        		'icon': image,
-        		});
-
-            }
-
-
-        $(document).ready(function() {
-
-            initialize();
-
-
-        });
-
-
-
-
-    </script>
-
+<div id="js-lat" data-lat={{service.latitude}}></div>
+<div id="js-lng" data-lng={{service.longitude}}></div>
+<div id="js-pin" data-pin="{% static 'img/edupin.png' %}"></div>
 
 {% endblock %}
 
 {% block homeactive %}{% endblock %}
 {% block servicesactive %}class="active"{% endblock %}
 {% block management_content %}
-
 
 <h4>{% tolocale service LANGUAGE_CODE %}</h4>
 <hr>
@@ -114,9 +43,9 @@
         <label class="control-label" for="id_address_city">{% trans "Location Name" %}</label>
 
         <div class="controls">
-        	{% for name in service.loc_name.all %}
-        		{{name.name}} ({{name.get_lang_display}}){% if not forloop.last %}<br>{% endif %}
-        	{% endfor %}
+            {% for name in service.loc_name.all %}
+                {{name.name}} ({{name.get_lang_display}}){% if not forloop.last %}<br>{% endif %}
+            {% endfor %}
         </div>
     </div>
     <div class="control-group {% if form.address_street.errors %} error {% endif %}">
@@ -137,9 +66,9 @@
     <div class="control-group {% if form.contact.errors %} error {% endif %}">
         <label class="control-label" for="id_contact">{% trans "Contacts" %}</label>
         <div class="controls">
-           	{% for contact in service.contact.all %}
-        		{{contact.name}} (<a href="mailto:{{contact.email}}">{{contact.email}}</a> - tel:{{contact.phone}}){% if not forloop.last %}<br>{% endif %}
-        	{% endfor %}
+            {% for contact in service.contact.all %}
+                {{contact.name}} (<a href="mailto:{{contact.email}}">{{contact.email}}</a> - tel:{{contact.phone}}){% if not forloop.last %}<br>{% endif %}
+            {% endfor %}
         </div>
     </div>
     <div class="control-group {% if form.enc_level.errors %} error {% endif %}">
@@ -192,9 +121,9 @@
     <div class="control-group {% for err in urls_form.errors %}{% if err|length > 0 %}error{% endif %}{% endfor %}{% if urls_form.non_form_errors %}error{% endif %}">
         <label class="control-label" for="id_urls">{% trans "Urls" %}</label>
         <div class="controls">
-       		{% for url in service.url.all %}
-        		<a href="{{url.url}}">{{url.url}}</a> - {{url.get_urltype_display}} ({{url.get_lang_display}}){% if not forloop.last %}<br>{% endif %}
-        	{% endfor %}
+            {% for url in service.url.all %}
+                <a href="{{url.url}}">{{url.url}}</a> - {{url.get_urltype_display}} ({{url.get_lang_display}}){% if not forloop.last %}<br>{% endif %}
+            {% endfor %}
         </div>
     </div>
     <div class="control-group">
@@ -208,3 +137,6 @@
 <div class="span4"><div id="map_canvas" style="width:300px; height: 300px;"></div>
 </div>
 {% endblock %}
+
+<script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="{% static 'edumanage/js/service_details.js' %}"></script>

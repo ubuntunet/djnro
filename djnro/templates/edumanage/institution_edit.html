@@ -51,6 +51,7 @@
 				<label class="control-label" for="id_contact"><b>{% trans "Contacts" %}</b></label>
 				<div class="controls">
 					<div class="">{{ form.contact }}</div>
+					<div id="js-contact" data-addcontactUrl="{% url adduser %}" ></div> 
 					<button class="btn btn-small btn-info" id="add_contact"><i class="icon-plus-sign icon-white"></i>Add...</button>
 					  {% if form.contact.errors %} <div class="alert-danger"> {{ form.contact.errors|join:", " }} </div>
                                        {% endif %} <span class="help-block"> {{ form.contact.help_text }}</span>
@@ -64,6 +65,7 @@
 		        <div class="controls">
 		        {% if urls_form.non_form_errors %} <div class="alert-danger"> {{ urls_form.non_form_errors|join:", "}}</div>{% endif %}
 		            <table id="urlsform"><thead><tr><td>url</td><td>type</td><td>language</td></tr></thead><tbody>
+		            <div id="js-urlsform" data-urlsform="{{urls_form.prefix}}" ></div> 
 		        {% for formset in urls_form.forms %}
 		        {{ formset.id }}
 
@@ -127,6 +129,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+		<div id="js-user" data-adduserurl="{% url adduser %}" ></div> 
         <button type="button" id="adduserSubmit" class="btn btn-primary">{% trans "Save changes" %}</button>
       </div>
     </div>
@@ -136,64 +139,7 @@
 {% endblock %}
 
 {% block extrajs %}
-<script type="text/javascript" src="{% static 'js/jquery.formset.js' %}"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#adduserSubmit").click(function(){
-		$.ajax({
-			url:"{% url adduser %}",
-			data:$("#add_user_form").serialize(),
-			type: "POST",
-			cache: false,
-			success:function(data){
-					try {
-						value = data.value;
-						text = data.text;
-						if (typeof value === 'undefined' && typeof text === 'undefined'){
-							$('#mymodalbody').html(data);
-						}
-						else{
-							$('#id_contact').append($("<option></option>").attr("value",value).text(text));
-							$('#myModal').modal('hide')
-						}
-					}
-					catch (exception) {
-						$('#mymodalbody').html(data);
-					}
-				}
-				});
-		return false;
-	});
-
-	$("#add_contact").click(function(){
-		$('#myModal').modal('show');
-		$.ajax({
-				url:"{% url adduser %}",
-				type: "GET",
-				success: function(data){
-					$('#mymodalbody').html(data);
-				}
-			});
-
-	 return false;
-	});
-
-
-	 $('#urlsform tbody tr').formset({
-        prefix: '{{urls_form.prefix}}',
-        formCssClass: "dynamic-formset1",
-        added: addButton,
-    });
-
-     $(".delete-row").prepend('<i class="icon-remove-sign icon-white"></i> ').addClass('btn btn-small btn-warning');
-     $(".add-row").prepend('<i class="icon-plus-sign icon-white"></i> ').addClass('btn btn-small btn-info');
-
-
-});
-function addButton(row){
-            $(row).find(".delete-row").prepend('<i class="icon-remove-sign icon-white"></i> ').addClass('btn btn-small btn-warning');
-        }
-
-</script>
+<script type="text/javascript" src="{% static 'edumanage/js/jquery.formset.js' %}"></script>
+<script type="text/javascript" src="{% static 'edumanage/js/institution_edit.js' %}"></script>
 
 {% endblock %}

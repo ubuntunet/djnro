@@ -133,11 +133,7 @@
 
 
 {% block extrajs %}
-<script type="text/javascript" src="{% static 'js/showpass.js' %}"></script>
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#id_secret').showPassword();
-});
-</script>
+<script type="text/javascript" src="{% static 'edumanage/js/showpass.js' %}"></script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript" src="{% static 'edumanage/js/servers_edit.js' %}"></script>
 {% endblock %}
