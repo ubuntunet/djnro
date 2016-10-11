@@ -1398,6 +1398,7 @@ def base_response(request):
     contacts = []
     institution = False
     institution_exists = False
+    institution_canhaveservicelocs = False
     try:
         profile = user.get_profile()
         institution = profile.institution
@@ -1422,6 +1423,10 @@ def base_response(request):
         instututiondetails = institution.institutiondetails
     except:
         instututiondetails = False
+    try:
+        institution_canhaveservicelocs = institution.ertype in [2, 3]
+    except:
+        pass
     return {
         'inst_num': len(inst),
         'servers_num': len(server),
@@ -1432,6 +1437,7 @@ def base_response(request):
         'institution': institution,
         'institutiondetails': instututiondetails,
         'institution_exists': institution_exists,
+        'institution_canhaveservicelocs': institution_canhaveservicelocs,
     }
 
 
@@ -1463,10 +1469,7 @@ def get_service_points(request):
             else:
                 response_location['enc'] = u"-"
             response_location['AP_no'] = u"%s" % (sl.AP_no)
-            try:
-                response_location['name'] = sl.loc_name.get(lang='en').name
-            except Name_i18n.DoesNotExist:
-                response_location['name'] = 'unknown'
+            response_location['name'] = get_i18n_name(sl.loc_name, lang, 'en', 'unknown')
             response_location['port_restrict'] = u"%s" % (sl.port_restrict)
             response_location['transp_proxy'] = u"%s" % (sl.transp_proxy)
             response_location['IPv6'] = u"%s" % (sl.IPv6)
@@ -1519,15 +1522,8 @@ def get_all_services(request):
         else:
             response_location['enc'] = u"-"
         response_location['AP_no'] = u"%s" % (sl.AP_no)
-        try:
-            response_location['inst'] = sl.institutionid.org_name.get(
-                lang=lang
-            ).name
-        except Name_i18n.DoesNotExist:
-            try:
-                response_location['name'] = sl.loc_name.get(lang='en').name
-            except Name_i18n.DoesNotExist:
-                response_location['name'] = 'unknown'
+        response_location['inst'] = get_i18n_name(sl.institutionid.org_name, lang, 'en', 'unknown')
+        response_location['name'] = get_i18n_name(sl.loc_name, lang, 'en', 'unknown')
         response_location['port_restrict'] = u"%s" % (sl.port_restrict)
         response_location['transp_proxy'] = u"%s" % (sl.transp_proxy)
         response_location['IPv6'] = u"%s" % (sl.IPv6)
@@ -2346,3 +2342,13 @@ def lookupShibAttr(attrmap, requestMeta):
             if len(requestMeta[attr]) > 0:
                 return requestMeta[attr]
     return ''
+
+def get_i18n_name(i18n_name, lang, default_lang='en', default_name='unknown'):
+    names = i18n_name.filter(lang=lang)
+    if names.count()==0:
+        names = i18n_name.filter(lang=default_lang)
+    if names.count()==0:
+        return default_name
+    else:
+        # follow ServiceLoc.get_name()
+        return ', '.join([i.name for i in names])
