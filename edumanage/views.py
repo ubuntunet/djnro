@@ -1062,7 +1062,7 @@ def del_contact(request):
                 len(institution.institutiondetails.contact.all()) == 1
             ):
                 resp['error'] = "Could not delete contact. It is the" \
-                    " only contact your institution.<br>Fix it and try again"
+                    " only contact your institution has.<br>Fix it and try again"
                 return HttpResponse(
                     json.dumps(resp),
                     mimetype='application/json'
@@ -1445,6 +1445,7 @@ def base_response(request):
 @social_active_required
 @never_cache
 def get_service_points(request):
+    lang = request.LANGUAGE_CODE
     if request.method == "GET":
         user = request.user
         try:
