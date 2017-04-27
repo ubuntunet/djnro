@@ -18,14 +18,14 @@ from edumanage.models import (
     CatEnrollment
 )
 
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes import admin as contenttype_admin
 
 
-class NameInline(generic.GenericTabularInline):
+class NameInline(contenttype_admin.GenericTabularInline):
     model = Name_i18n
 
 
-class UrlInline(generic.GenericTabularInline):
+class UrlInline(contenttype_admin.GenericTabularInline):
     model = URL_i18n
 
 
@@ -104,7 +104,7 @@ from tinymce.widgets import TinyMCE
 class TinyMCEFlatPageAdmin(FlatPageAdmin):
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'content':
-            return forms.CharField(widget=TinyMCE(
+            return db_field.formfield(widget=TinyMCE(
                 attrs={'cols': 80, 'rows': 30},
                 mce_attrs={'external_link_list_url': reverse('tinymce.views.flatpages_link_list')},
             ))
