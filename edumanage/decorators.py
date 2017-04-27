@@ -1,23 +1,39 @@
 from django.template import RequestContext
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
-from django.contrib.auth.models import User
+from accounts.models import User
 from django import forms
+
+from functools import wraps
+from django.utils.decorators import available_attrs
+from django.views.decorators.cache import (never_cache, cache_page)
 
 from accounts.models import UserProfile
 from edumanage.forms import UserProfileForm
 from edumanage.models import Institution
 
+# We only need get_nro_name from edumanage.views, but cannot import selectively
+# as that would fail as a circular dependency
+import edumanage.views
 
 def social_active_required(function):
+    @wraps(function, assigned=available_attrs(function))
     def wrap(request, *args, **kw):
         user = request.user
         try:
-            profile = request.user.get_profile()
+            profile = request.user.userprofile
             if profile.is_social_active is True:
                 return function(request, *args, **kw)
             else:
-                status = _("User account <strong>%s</strong> is pending activation. Administrators have been notified and will activate this account within the next days. <br>If this account has remained inactive for a long time contact your technical coordinator or GRNET Helpdesk") %user.username
+                status = _(
+                    "User account <strong>%(username)s</strong> is pending"
+                    " activation. Administrators have been notified and will"
+                    " activate this account within the next days. <br>If this"
+                    " account has remained inactive for a long time contact"
+                    " your technical coordinator or %(nroname)s Helpdesk") % {
+                    'username': user.username,
+                    'nroname': edumanage.views.get_nro_name(request.LANGUAGE_CODE)
+                    }
                 return render(
                     request,
                     'status.html',
@@ -50,3 +66,18 @@ def social_active_required(function):
                 }
             )
     return wrap
+
+def cache_page_ifreq(req_cache_func):
+    def view_decorator(view_func):
+        @wraps(view_func, assigned=available_attrs(view_func))
+        def wrapped_view_func(request, *args, **kwargs):
+            try:
+                (cache_timeout, cache_kwargs) = req_cache_func(request,
+                                                               *args,
+                                                               **kwargs)
+                ret = cache_page(cache_timeout, **cache_kwargs)(view_func)
+            except TypeError:
+                ret = never_cache(view_func)
+            return ret(request, *args, **kwargs)
+        return wrapped_view_func
+    return view_decorator
