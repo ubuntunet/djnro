@@ -1,0 +1,136 @@
+a.navbar-brand {
+	padding: 0;
+}
+
+a.navbar-brand img {
+	height: 100%;
+}
+
+/* sticky footer begin */
+html, body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow-y: scroll;
+}
+
+.stickyfooter-container {
+	display: table;
+	height: 100%;
+	width: 100%;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+footer.stickyfooter {
+	display: table-footer-group;
+	height: 1px;
+}
+/* sticky footer end */
+
+footer {
+	text-align: center;
+}
+
+footer > div {
+	padding-top: 15px;
+	background: #eee;
+}
+
+.pac-container {
+	z-index: 100000;
+}
+
+footer.auth {
+	padding: 8px;
+}
+
+.push-top {
+	height: 51px;
+}
+
+@media screen and (max-width: 991px) {
+    /* when .sidebar at the top, .push-top just adds some space, without aligning
+       with right column */
+    .sidebar.push-top {
+        height: 15px;
+    }
+}
+
+.home .squares {
+	padding: 50px 0;
+}
+
+.home .squares .square > div {
+	background: #9eb5bd;
+	padding: 5%;
+	text-align: center;
+	height: 400px;
+}
+
+.home .squares .square > div:hover {
+	background: #8da4ac;
+}
+
+.home .squares .square h3 {
+	text-align: center;
+}
+
+.home #map_wrapper {
+	left: 0;
+	right: 0;
+}
+
+.headtitle {
+	font-family: "Franklin Gothic Demi", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
+	letter-spacing: -1px;
+}
+
+.closest #map_canvas{
+	position: fixed !important;
+	top: 52px;
+	bottom: 0px;
+	left: 0;
+	right: 0;
+	z-index: 10000;
+}
+
+@media screen and (max-width: 991px) {
+    .sidebar>.nav {
+        text-align: center;
+    }
+
+    /* this "cancels" .nav-stacked float: none */
+    .sidebar>.nav.nav-stacked>li {
+        display: inline-block;
+    }
+}
+
+.sidebar>.nav-stacked>li+li {
+    margin-top: 5px;
+}
+
+/* tweak .well for sidebar */
+.sidebar.well {
+    margin-bottom: 15px;
+}
+
+/* avoid words in sidebar elements overflowing the .well container */
+@media screen and (min-width: 992px) {
+    .sidebar.well>.nav>li>a {
+	overflow: hidden;
+	-ms-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+    }
+}
+
+.sidebar>.nav-pills>li>a>.badge {
+    margin-left: initial;
+}
+
+.closest footer {
+	display: none;
+}

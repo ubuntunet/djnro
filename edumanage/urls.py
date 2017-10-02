@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns(
@@ -12,6 +12,9 @@ urlpatterns = patterns(
     url(r'^worldpoints/?$', 'worldPoints', name="worldPoints"),
     url(r'^participants/?$', 'participants', name="participants"),
     url(r'^services/allpoints/?$', 'get_all_services', name="get-all-services"),
+
+    url(r'^connect/?$', 'connect', name="connect"),
+    url(r'^cat-api(?:/(?P<cat_instance>[^/]+))?/?$', 'cat_user_api_proxy', name="cat-api"),
 
     # eduroam db views
     url(r'^general/institution.xml', "instxml", name="instxml"),

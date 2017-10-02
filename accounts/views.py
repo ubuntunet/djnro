@@ -2,11 +2,11 @@ import logging
 
 from django.conf import settings
 from django.core.mail import send_mail
-from django.contrib.sites.models import Site
+from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
+from accounts.models import User
 from django.views.decorators.cache import never_cache
 from django import forms
 from registration.models import RegistrationProfile
@@ -36,7 +36,7 @@ def activate(request, activation_key):
                 }
             )
         try:
-            user_profile = rp.user.get_profile()
+            user_profile = rp.user.userprofile
         except UserProfile.DoesNotExist:
             return render(
                 request,
@@ -66,7 +66,7 @@ def activate(request, activation_key):
         request_data = request.POST.copy()
         try:
             user = User.objects.get(pk=request_data['user'])
-            up = user.get_profile()
+            up = user.userprofile
             up.institution = Institution.objects.get(
                 pk=request_data['institution']
             )
@@ -98,7 +98,7 @@ def activate(request, activation_key):
             email = render_to_string(
                 'registration/activation_complete.txt',
                 {
-                    'site': Site.objects.get_current(),
+                    'site': get_current_site(request),
                     'user': account
                 }
             )
